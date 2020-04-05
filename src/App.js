@@ -19,7 +19,7 @@ function App() {
 
     if (filledPixelsEdited.includes(String(pixelIndex) + String(rowIndex))) {
       document.getElementById(String(pixelIndex) + String(rowIndex)).style.backgroundColor = "white"
-      filledPixelsEdited.filter(a => a !== (String(pixelIndex) + String(rowIndex)))
+      filledPixelsEdited = filledPixelsEdited.filter(a => a !== (String(pixelIndex) + String(rowIndex)))
     } else {
       document.getElementById(String(pixelIndex) + String(rowIndex)).style.backgroundColor = "black"
       filledPixelsEdited = [...filledPixels, (String(pixelIndex) + String(rowIndex))]
