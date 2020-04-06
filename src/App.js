@@ -5,39 +5,39 @@ import { ChromePicker } from 'react-color';
 
 function App() {
   const [canvas, setCanvas] = useState(
-    new Array(100).fill('')
-      .map(() => new Array(100).fill('')))
+    new Array(50).fill('')
+      .map(() => new Array(50).fill('')))
 
   const [filledPixels, setFilledPixels] = useState([])
-  var filledPixelsEdited = [...filledPixels]
+
+  const [color, setColor] = useState('#ff0000');
 
   const handlePixelClick = (rowIndex, pixelIndex) => {
 
-    /* const filledPixelsEdited = [...filledPixels] */
-
-    if (filledPixelsEdited.includes(String(pixelIndex) + String(rowIndex))) {
-      filledPixelsEdited = filledPixelsEdited.filter(a => a !== (String(pixelIndex) + String(rowIndex)))
+    if (filledPixels.includes(makeKey(rowIndex, pixelIndex))) {
+      setFilledPixels(
+        filledPixels.filter(a => a !== (makeKey(rowIndex, pixelIndex)))
+      )
     } else {
-      filledPixelsEdited = [...filledPixels, (String(pixelIndex) + String(rowIndex))]
+      setFilledPixels([...filledPixels, (makeKey(rowIndex, pixelIndex))])
     }
-
-    console.log(filledPixelsEdited)
-    setFilledPixels(filledPixelsEdited)
   }
 
   const changeColor = (rowIndex, pixelIndex) => {
-    if (filledPixelsEdited.includes(String(pixelIndex) + String(rowIndex))) return 'pixel-filled'
-    else return 'pixel-empty'
+    return (filledPixels.includes(makeKey(rowIndex, pixelIndex)))
+      ? 'pixel-filled'
+      : 'pixel-empty'
   }
 
+  const makeKey = (rowIndex, pixelIndex) => (String(rowIndex) + '.' + String(pixelIndex))
 
   return (
     <div className={"centered"}>
       <h2 className={"title"}>Prawie jak Paint 🖌</h2>
       <div className={"picker-style"}>
         <ChromePicker
-          color={"#ff0000"}
-          onChangeComplete={() => { }}
+          color={color}
+          onChangeComplete={(color) => { setColor(color.hex) }}
         />
       </div>
       {
@@ -45,10 +45,8 @@ function App() {
           <div key={rowIndex}
             className={'canvas-row'}>
             {
-
               row.map((pixel, pixelIndex) =>
                 <div key={pixelIndex}
-                  /* id={String(pixelIndex) + String(rowIndex)} */
                   onClick={() => handlePixelClick(rowIndex, pixelIndex)}
                   className={changeColor(rowIndex, pixelIndex)}>
                   {pixel}

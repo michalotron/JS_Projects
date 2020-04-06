@@ -28,8 +28,8 @@
 }
 
 .pixel-filled{
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
   text-align: center;
   font-size: 5px;
   font-weight: bold;
@@ -41,8 +41,8 @@
 }
 
 .pixel-empty{
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
   text-align: center;
   font-size: 5px;
   font-weight: bold;
