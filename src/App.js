@@ -1,49 +1,56 @@
 import React, { useState } from 'react';
 import './App.css';
+import { ChromePicker } from 'react-color';
+
 
 function App() {
-
-  const [filledPixels, setFilledPixels] = useState([])
-
   const [canvas, setCanvas] = useState(
     new Array(100).fill('')
       .map(() => new Array(100).fill('')))
 
+  const [filledPixels, setFilledPixels] = useState([])
+  var filledPixelsEdited = [...filledPixels]
 
   const handlePixelClick = (rowIndex, pixelIndex) => {
-    const canvasEdited = [...canvas]
-    canvasEdited[rowIndex] = [...canvasEdited[rowIndex]]
 
-    var filledPixelsEdited = [...filledPixels]
-    /* .filter(a => a !== (String(pixelIndex) + String(rowIndex))) */
+    /* const filledPixelsEdited = [...filledPixels] */
 
     if (filledPixelsEdited.includes(String(pixelIndex) + String(rowIndex))) {
-      document.getElementById(String(pixelIndex) + String(rowIndex)).style.backgroundColor = "white"
       filledPixelsEdited = filledPixelsEdited.filter(a => a !== (String(pixelIndex) + String(rowIndex)))
     } else {
-      document.getElementById(String(pixelIndex) + String(rowIndex)).style.backgroundColor = "black"
       filledPixelsEdited = [...filledPixels, (String(pixelIndex) + String(rowIndex))]
     }
 
     console.log(filledPixelsEdited)
-    setCanvas(canvasEdited)
     setFilledPixels(filledPixelsEdited)
+  }
+
+  const changeColor = (rowIndex, pixelIndex) => {
+    if (filledPixelsEdited.includes(String(pixelIndex) + String(rowIndex))) return 'pixel-filled'
+    else return 'pixel-empty'
   }
 
 
   return (
     <div className={"centered"}>
       <h2 className={"title"}>Prawie jak Paint 🖌</h2>
+      <div className={"picker-style"}>
+        <ChromePicker
+          color={"#ff0000"}
+          onChangeComplete={() => { }}
+        />
+      </div>
       {
         canvas.map((row, rowIndex) => (
           <div key={rowIndex}
             className={'canvas-row'}>
             {
+
               row.map((pixel, pixelIndex) =>
                 <div key={pixelIndex}
-                  id={String(pixelIndex) + String(rowIndex)}
+                  /* id={String(pixelIndex) + String(rowIndex)} */
                   onClick={() => handlePixelClick(rowIndex, pixelIndex)}
-                  className={'canvas-pixel'}>
+                  className={changeColor(rowIndex, pixelIndex)}>
                   {pixel}
                 </div>)
             }
