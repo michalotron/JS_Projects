@@ -8,19 +8,21 @@ function App() {
     new Array(50).fill('')
       .map(() => new Array(50).fill('')))
 
-  const [filledPixels, setFilledPixels] = useState([])
+  const [filledPixels, setFilledPixels] = useState([[]])
 
   const [color, setColor] = useState('#ff0000');
 
   const handlePixelClick = (rowIndex, pixelIndex) => {
-
     if (filledPixels.includes(makeKey(rowIndex, pixelIndex))) {
       setFilledPixels(
         filledPixels.filter(a => a !== (makeKey(rowIndex, pixelIndex)))
       )
+      console.log('yep')
     } else {
       setFilledPixels([...filledPixels, (makeKey(rowIndex, pixelIndex))])
+      console.log('nope')
     }
+    console.log(filledPixels)
   }
 
   const changeColor = (rowIndex, pixelIndex) => {
@@ -29,7 +31,12 @@ function App() {
       : 'pixel-empty'
   }
 
-  const makeKey = (rowIndex, pixelIndex) => (String(rowIndex) + '.' + String(pixelIndex))
+  const divPixelStyle = {
+    backgroundColor: { color }
+  }
+
+  /* const makeKey = (rowIndex, pixelIndex) => (String(rowIndex) + '.' + String(pixelIndex)) */
+  const makeKey = (rowIndex, pixelIndex) => (Array(rowIndex, pixelIndex))
 
   return (
     <div className={"centered"}>
