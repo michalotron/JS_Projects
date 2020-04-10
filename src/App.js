@@ -8,25 +8,39 @@ function App() {
     new Array(50).fill('')
       .map(() => new Array(50).fill('')))
 
-  const [filledPixels, setFilledPixels] = useState([[]])
+  const [filledPixels, setFilledPixels] = useState([])
 
   const [color, setColor] = useState('#ff0000');
 
   const handlePixelClick = (rowIndex, pixelIndex) => {
-    if (filledPixels.includes(makeKey(rowIndex, pixelIndex))) {
-      setFilledPixels(
-        filledPixels.filter(a => a !== (makeKey(rowIndex, pixelIndex)))
-      )
-      console.log('yep')
-    } else {
-      setFilledPixels([...filledPixels, (makeKey(rowIndex, pixelIndex))])
-      console.log('nope')
+
+    function isThere(pair) {
+      return (pair[0] === rowIndex && pair[1] === pixelIndex)
     }
-    console.log(filledPixels)
+
+    function isThereNot(pair) {
+      return (pair[0] !== rowIndex && pair[1] !== pixelIndex) //wiem ze nie dziala
+    }
+
+    if (filledPixels.find(isThere)) {
+      setFilledPixels([...filledPixels.filter(isThereNot)])
+    }
+    else {
+      setFilledPixels([...filledPixels, (makeKey(rowIndex, pixelIndex))])
+    }
+    console.log([...filledPixels])
   }
 
   const changeColor = (rowIndex, pixelIndex) => {
-    return (filledPixels.includes(makeKey(rowIndex, pixelIndex)))
+    function isThere(pair) {
+      if (pair[0] === rowIndex && pair[1] === pixelIndex) {
+        return pair
+      } else {
+        return undefined
+      }
+    }
+
+    return (filledPixels.find(isThere))
       ? 'pixel-filled'
       : 'pixel-empty'
   }
