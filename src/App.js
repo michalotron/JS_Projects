@@ -15,11 +15,11 @@ function App() {
   const handlePixelClick = (rowIndex, pixelIndex) => {
 
     function isThere(pair) {
-      return (pair[0] === rowIndex && pair[1] === pixelIndex)
+      return (pair[0] === rowIndex && pair[1] === pixelIndex)   //raz tutaj
     }
 
     function isThereNot(pair) {
-      return (pair[0] !== rowIndex && pair[1] !== pixelIndex) //wiem ze nie dziala
+      return !(pair[0] === rowIndex && pair[1] === pixelIndex)
     }
 
     if (filledPixels.find(isThere)) {
@@ -28,11 +28,10 @@ function App() {
     else {
       setFilledPixels([...filledPixels, (makeKey(rowIndex, pixelIndex))])
     }
-    console.log([...filledPixels])
   }
 
   const changeColor = (rowIndex, pixelIndex) => {
-    function isThere(pair) {
+    function isThere(pair) {                                    //drugi raz tutaj
       if (pair[0] === rowIndex && pair[1] === pixelIndex) {
         return pair
       } else {
