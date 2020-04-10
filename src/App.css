@@ -27,6 +27,19 @@
   margin-left: 205px;
 }
 
+.pixel{
+  width: 8px;
+  height: 8px;
+  text-align: center;
+  font-size: 5px;
+  font-weight: bold;
+
+  border-style: solid;
+  border-color: black;
+  border-width: 0.3px;
+  background-color: white;
+}
+
 .pixel-filled{
   width: 8px;
   height: 8px;

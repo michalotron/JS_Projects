@@ -13,43 +13,19 @@ function App() {
   const [color, setColor] = useState('#ff0000');
 
   const handlePixelClick = (rowIndex, pixelIndex) => {
-
-    function isThere(pair) {
-      return (pair[0] === rowIndex && pair[1] === pixelIndex)   //raz tutaj
-    }
-
-    function isThereNot(pair) {
-      return !(pair[0] === rowIndex && pair[1] === pixelIndex)
-    }
-
-    if (filledPixels.find(isThere)) {
-      setFilledPixels([...filledPixels.filter(isThereNot)])
-    }
-    else {
-      setFilledPixels([...filledPixels, (makeKey(rowIndex, pixelIndex))])
-    }
+    const isThereNot = (pair) => !(pair[0] === rowIndex && pair[1] === pixelIndex)
+    const nextFilledPixels = (filledPixels.find(([x, y]) => (x === rowIndex && y === pixelIndex)))
+      ? (filledPixels.filter(isThereNot))
+      : [...filledPixels, ([rowIndex, pixelIndex, color])]
+    setFilledPixels(nextFilledPixels)
   }
 
-  const changeColor = (rowIndex, pixelIndex) => {
-    function isThere(pair) {                                    //drugi raz tutaj
-      if (pair[0] === rowIndex && pair[1] === pixelIndex) {
-        return pair
-      } else {
-        return undefined
-      }
-    }
-
-    return (filledPixels.find(isThere))
-      ? 'pixel-filled'
-      : 'pixel-empty'
+  const getColor = (rowIndex, pixelIndex) => {
+    const pixel = filledPixels.find(([x, y]) => (x === rowIndex && y === pixelIndex))
+    return (pixel)
+      ? pixel[2]
+      : 'white'
   }
-
-  const divPixelStyle = {
-    backgroundColor: { color }
-  }
-
-  /* const makeKey = (rowIndex, pixelIndex) => (String(rowIndex) + '.' + String(pixelIndex)) */
-  const makeKey = (rowIndex, pixelIndex) => (Array(rowIndex, pixelIndex))
 
   return (
     <div className={"centered"}>
@@ -66,11 +42,13 @@ function App() {
             className={'canvas-row'}>
             {
               row.map((pixel, pixelIndex) =>
-                <div key={pixelIndex}
+                <div
+                  /* onMouseOver={() => handlePixelClick(rowIndex, pixelIndex)} */
+                  key={pixelIndex}
                   onClick={() => handlePixelClick(rowIndex, pixelIndex)}
-                  className={changeColor(rowIndex, pixelIndex)}>
-                  {pixel}
-                </div>)
+                  className={"pixel"}
+                  style={{ backgroundColor: getColor(rowIndex, pixelIndex) }}
+                />)
             }
           </div>
         ))
