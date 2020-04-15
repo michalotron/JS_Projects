@@ -20,6 +20,15 @@ function App() {
     setFilledPixels(nextFilledPixels)
   }
 
+  const handleRightClick = (event, rowIndex, pixelIndex) => {
+    event.preventDefault()
+    erasePixel(rowIndex, pixelIndex)
+  }
+
+  const erasePixel = (rowIndex, pixelIndex) => setFilledPixels(
+    filledPixels.filter(([x, y]) => !(x === rowIndex && y === pixelIndex))
+  )
+
   const getColor = (rowIndex, pixelIndex) => {
     const pixel = filledPixels.find(([x, y]) => (x === rowIndex && y === pixelIndex))
     return (pixel)
@@ -33,7 +42,7 @@ function App() {
       <div className={"picker-style"}>
         <ChromePicker
           color={color}
-          onChangeComplete={(color) => { setColor(color.hex) }}
+          onChangeComplete={(color) => setColor(color.hex)}
         />
       </div>
       {
@@ -45,6 +54,7 @@ function App() {
                 <div
                   /* onMouseOver={() => handlePixelClick(rowIndex, pixelIndex)} */
                   key={pixelIndex}
+                  onContextMenu={(event) => handleRightClick(event, rowIndex, pixelIndex)}
                   onClick={() => handlePixelClick(rowIndex, pixelIndex)}
                   className={"pixel"}
                   style={{ backgroundColor: getColor(rowIndex, pixelIndex) }}
