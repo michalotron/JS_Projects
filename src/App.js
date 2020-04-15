@@ -5,19 +5,16 @@ import { ChromePicker } from 'react-color';
 
 function App() {
   const [canvas, setCanvas] = useState(
-    new Array(50).fill('')
+    new Array(47).fill('')
       .map(() => new Array(50).fill('')))
 
   const [filledPixels, setFilledPixels] = useState([])
 
-  const [color, setColor] = useState('#ff0000');
+  const [color, setColor] = useState('#000000');
 
   const handlePixelClick = (rowIndex, pixelIndex) => {
     const isThereNot = (pair) => !(pair[0] === rowIndex && pair[1] === pixelIndex)
-    const nextFilledPixels = (filledPixels.find(([x, y]) => (x === rowIndex && y === pixelIndex)))
-      ? (filledPixels.filter(isThereNot))
-      : [...filledPixels, ([rowIndex, pixelIndex, color])]
-    setFilledPixels(nextFilledPixels)
+    setFilledPixels([...filledPixels.filter(isThereNot), [rowIndex, pixelIndex, color]])
   }
 
   const handleRightClick = (event, rowIndex, pixelIndex) => {
