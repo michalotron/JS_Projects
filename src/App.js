@@ -3,6 +3,8 @@ import './App.css';
 import { ChromePicker } from 'react-color';
 import paint_brush_icon from './assets/paint_brush_icon.png'
 import paint_brush_icon_choosen from './assets/paint_brush_icon_choosen.png'
+import rectangle_icon from './assets/rectangle_icon.png'
+import rectangle_icon_choosen from './assets/rectangle_icon_choosen.png'
 
 
 function App() {
@@ -13,6 +15,7 @@ function App() {
   const [filledPixels, setFilledPixels] = useState([])
   const [color, setColor] = useState('#000000');
   const [paintBrushClicked, paintBrushClickedstate] = useState(false)
+  const [rectangleClicked, rectangleClickedstate] = useState(false)
   const [mouseDown, mouseDownState] = useState(false)
 
   const handlePixelClick = (rowIndex, pixelIndex) => {
@@ -36,15 +39,24 @@ function App() {
       : 'white'
   }
 
-  const handlePaintBrushClick = () => {
+  const isPaintBrushClicked = () => {
     paintBrushClickedstate(!paintBrushClicked)
-    console.log(paintBrushClicked)
   }
 
   const paintBrushChoose = () => {
     return paintBrushClicked
       ? paint_brush_icon_choosen
       : paint_brush_icon
+  }
+
+  const isRectangleClicked = () => {
+    rectangleClickedstate(!rectangleClicked)
+  }
+
+  const rectangleChoose = () => {
+    return rectangleClicked
+      ? rectangle_icon_choosen
+      : rectangle_icon
   }
 
   const isMouseDown = () => {
@@ -60,38 +72,47 @@ function App() {
   return (
     <div className={"centered"}>
       <h2 className={"title"}>Prawie jak Paint 🖌</h2>
-      <div>
-        <img src={paintBrushChoose()}
-          alt="PaintBrushIcon"
-          className={'icon'}
-          onClick={() => handlePaintBrushClick()} />
+      <div className={"toolBox"}>
+        <div>
+          <img src={paintBrushChoose()}
+            alt="PaintBrushIcon"
+            className={'paintBrushIcon'}
+            onClick={() => isPaintBrushClicked()} />
+        </div>
+        <div>
+          <img src={rectangleChoose()}
+            alt="RectangleIcon"
+            className={'rectangleIcon'}
+            onClick={() => isRectangleClicked()} />
+        </div>
+        {/* </div> */}
+        <div className={"picker-style"}>
+          <ChromePicker
+            color={color}
+            onChangeComplete={(color) => setColor(color.hex)}
+          />
+        </div>
+        {
+          canvas.map((row, rowIndex) => (
+            <div key={rowIndex}
+              className={'canvas-row'}>
+              {
+                row.map((pixel, pixelIndex) =>
+                  <div
+                    onMouseDown={() => isMouseDown()}
+                    onMouseUp={() => isMouseUp()}
+                    onMouseOver={() => mouseDown && paintBrushClicked && handlePixelClick(rowIndex, pixelIndex)}
+                    key={pixelIndex}
+                    onContextMenu={(event) => handleRightClick(event, rowIndex, pixelIndex)}
+                    onClick={() => !paintBrushClicked && handlePixelClick(rowIndex, pixelIndex)}
+                    className={"pixel"}
+                    style={{ backgroundColor: getColor(rowIndex, pixelIndex) }}
+                  />)
+              }
+            </div>
+          ))
+        }
       </div>
-      <div className={"picker-style"}>
-        <ChromePicker
-          color={color}
-          onChangeComplete={(color) => setColor(color.hex)}
-        />
-      </div>
-      {
-        canvas.map((row, rowIndex) => (
-          <div key={rowIndex}
-            className={'canvas-row'}>
-            {
-              row.map((pixel, pixelIndex) =>
-                <div
-                  onMouseDown={() => isMouseDown()}
-                  onMouseUp={() => isMouseUp()}
-                  onMouseOver={() => mouseDown && paintBrushClicked && handlePixelClick(rowIndex, pixelIndex)}
-                  key={pixelIndex}
-                  onContextMenu={(event) => handleRightClick(event, rowIndex, pixelIndex)}
-                  onClick={() => !paintBrushClicked && handlePixelClick(rowIndex, pixelIndex)}
-                  className={"pixel"}
-                  style={{ backgroundColor: getColor(rowIndex, pixelIndex) }}
-                />)
-            }
-          </div>
-        ))
-      }
     </div>
   );
 }

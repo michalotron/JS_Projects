@@ -1,22 +1,29 @@
-/* body{
-  justify-content: center;
-  align-items: center;
-} */
 
-.icon{
+.toolBox{
+  overflow: auto;
+  width: 100%;
+}
+
+.paintBrushIcon{
   height: 60px;
   width: auto;
-  /* display: inline-block; */
   float: right;
-  margin-right: 66%;
-  margin-bottom: 10px;
+  margin-right: 950px;
+  margin-bottom: auto;
+}
+
+.rectangleIcon{
+  height: 60px;
+  width: auto;
+  float: right;
+  margin-right: 5px;
+  margin-bottom: auto;  
 }
 
 .picker-style{
-  /* display: flex; */
-  /* flex-direction: row; */
   float: right;
   width: 70%;
+  margin-top: 5px;
 }
 
 .canvas-row {
@@ -40,32 +47,6 @@
 }
 
 .pixel{
-  width: 8px;
-  height: 8px;
-  text-align: center;
-  font-size: 5px;
-  font-weight: bold;
-
-  border-style: solid;
-  border-color: black;
-  border-width: 0.3px;
-  background-color: white;
-}
-
-.pixel-filled{
-  width: 8px;
-  height: 8px;
-  text-align: center;
-  font-size: 5px;
-  font-weight: bold;
-
-  border-style: solid;
-  border-color: black;
-  border-width: 0.3px;
-  background-color: black;
-}
-
-.pixel-empty{
   width: 8px;
   height: 8px;
   text-align: center;
