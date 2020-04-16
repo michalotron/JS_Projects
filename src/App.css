@@ -3,12 +3,20 @@
   align-items: center;
 } */
 
+.icon{
+  height: 60px;
+  width: auto;
+  /* display: inline-block; */
+  float: right;
+  margin-right: 66%;
+  margin-bottom: 10px;
+}
+
 .picker-style{
   /* display: flex; */
   /* flex-direction: row; */
-  display: inline-block;
-  vertical-align: text-top;
-  margin: 0 auto;
+  float: right;
+  width: 70%;
 }
 
 .canvas-row {
@@ -23,8 +31,12 @@
 }
 
 .title{
-  /* text-align: center; */
-  margin-left: 205px;
+  margin-left: 345px;
+  border-style: solid;
+  border-color: black;
+  border-width: 5px;
+  box-sizing: border-box;
+  width: 15%;
 }
 
 .pixel{
